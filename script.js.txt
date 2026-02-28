@@ -1,0 +1,40 @@
+function calcolaAstro() {
+    const dateInput = document.getElementById('birthdate').value;
+    const timeInput = document.getElementById('birthtime').value;
+
+    if (!dateInput || !timeInput) {
+        alert("Per favore, inserisci tutti i dati!");
+        return;
+    }
+
+    const birthDate = new Date(dateInput);
+    const day = birthDate.getDate();
+    const month = birthDate.getMonth() + 1;
+    const hour = parseInt(timeInput.split(':')[0]);
+
+    // 1. Calcolo Segno Zodiacale
+    const segni = ["Capricorno", "Acquario", "Pesci", "Ariete", "Toro", "Gemelli", "Cancro", "Leone", "Vergine", "Bilancia", "Scorpione", "Sagittario", "Capricorno"];
+    const giorniFine = [19, 18, 20, 19, 20, 20, 22, 22, 22, 22, 21, 21];
+    let segno = (day > giorniFine[month - 1]) ? segni[month] : segni[month - 1];
+
+    // 2. Calcolo Approssimativo Ascendente (metodo semplificato basato sull'ora)
+    // Nota: Un calcolo reale richiede longitudine/latitudine, ma per un'app base l'ora è un buon inizio.
+    const ascendenti = ["Ariete", "Toro", "Gemelli", "Cancro", "Leone", "Vergine", "Bilancia", "Scorpione", "Sagittario", "Capricorno", "Acquario", "Pesci"];
+    let indexAsc = Math.floor(hour / 2); // Ogni 2 ore cambia il segno ascendente (approssimato)
+    let ascendente = ascendenti[indexAsc];
+
+    // 3. Oroscopo Casuale
+    const consigli = [
+        "Oggi le stelle ti sorridono: è il momento di osare!",
+        "Fai attenzione alle spese impreviste nel pomeriggio.",
+        "Un incontro inaspettato cambierà la tua prospettiva.",
+        "Marte in opposizione consiglia prudenza nei discorsi."
+    ];
+    let oroscopo = consigli[Math.floor(Math.random() * consigli.length)];
+
+    // Mostra Risultati
+    document.getElementById('user-sign').innerText = "Segno: " + segno;
+    document.getElementById('user-ascendant').innerText = "Ascendente: " + ascendente;
+    document.getElementById('horoscope-text').innerText = oroscopo;
+    document.getElementById('result').classList.remove('hidden');
+}
